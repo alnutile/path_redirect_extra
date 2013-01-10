@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Quick check to see if we are at page not found
+ * Should only effect page not found
+ */
+function path_redirect_extra_init() {
+  //Check if empty page
+  $status = menu_get_item($_GET['q']);
+  if(empty($status)) {
+    //do one more check if this can be redirects
+    if(isset($_REQUEST['q'])) {
+      $original_request = check_plain($_REQUEST['q']);
+      $result = db_query("SELECT redirect FROM path_redirect WHERE source LIKE \"%s\"", $original_request);
+      while ($row = db_fetch_array($result)) {
+        drupal_goto($row['redirect'], $query = NULL, $fragment = NULL, $http_response_code = 301);
+      }
+    }
+  }
+}
