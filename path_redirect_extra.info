@@ -1,4 +1,4 @@
-name = Hook Alter some of the URLs
+name = Path Redirect Extra
 description = Spaces does not always work well with redirect
 core = 6.x
 
